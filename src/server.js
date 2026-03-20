@@ -30,6 +30,31 @@ app.use(
 );
 app.use(cookieParser());
 
+// Welcome
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to E-Pharmacy API',
+    documentation: '/api/ping',
+  });
+});
+
+app.get('/api', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Welcome to E-Pharmacy API',
+    version: '1.0.0',
+    endpoints: {
+      auth: '/api/user',
+      dashboard: '/api/dashboard',
+      orders: '/api/orders',
+      products: '/api/products',
+      suppliers: '/api/suppliers',
+      customers: '/api/customers',
+    },
+  });
+});
+
 // Health check
 app.get('/api/ping', (req, res) => {
   res.json({ message: 'pong', timestamp: new Date().toISOString() });
