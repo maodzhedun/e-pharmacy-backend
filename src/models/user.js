@@ -4,7 +4,9 @@ const userSchema = new Schema(
   {
     email: { type: String, unique: true, required: true },
     password: { type: String, required: true },
-    name: { type: String, default: 'Clayton Santos' },
+    name: { type: String, required: true },
+    phone: { type: String, default: '' },
+    role: { type: String, enum: ['admin', 'vendor'], default: 'vendor' },
   },
   { timestamps: true, versionKey: false },
 );

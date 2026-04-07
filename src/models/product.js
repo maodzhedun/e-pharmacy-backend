@@ -9,6 +9,7 @@ const productSchema = new Schema(
     stock: { type: String, required: true },
     price: { type: String, required: true },
     category: { type: String, required: true, enum: PRODUCT_CATEGORIES },
+    description: { type: String, default: '' },
   },
   { timestamps: true, versionKey: false },
 );
