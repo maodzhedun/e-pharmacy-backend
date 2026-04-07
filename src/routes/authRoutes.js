@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import { celebrate } from 'celebrate';
-import { loginUser, logoutUser, getUserInfo, refreshUserSession } from '../controllers/authController.js';
-import { loginSchema } from '../validations/authValidation.js';
+import {registerUser, loginUser, logoutUser, getUserInfo, refreshUserSession } from '../controllers/authController.js';
+import { registerSchema, loginSchema } from '../validations/authValidation.js';
 import { authenticate } from '../middleware/authenticate.js';
 
 const router = Router();
 
+
+router.post('/user/register', celebrate(registerSchema), registerUser);
 router.post('/user/login', celebrate(loginSchema), loginUser);
 router.post('/user/logout', logoutUser);
 router.post('/user/refresh', refreshUserSession);

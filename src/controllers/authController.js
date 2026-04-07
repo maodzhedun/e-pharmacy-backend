@@ -4,6 +4,29 @@ import { User } from '../models/user.js';
 import { Session } from '../models/session.js';
 import { createSession, setSessionCookies, clearSessionCookies } from '../services/auth.js';
 
+// POST /api/user/register
+export const registerUser = async (req, res, next) => {
+  const { name, email, phone, password } = req.body;
+
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    return next(createHttpError(409, 'Email already in use'));
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+  const user = await User.create({
+    name, email, phone,
+    password: hashedPassword,
+    role: 'vendor',
+  });
+
+  // Auto-login after registration
+  const session = await createSession(user._id);
+  setSessionCookies(res, session);
+
+  res.status(201).json({ token: session.accessToken, user });
+};
+
 // POST /api/user/login
 export const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
