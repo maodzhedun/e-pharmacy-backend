@@ -15,6 +15,7 @@ import ordersRoutes from './routes/ordersRoutes.js';
 import productsRoutes from './routes/productsRoutes.js';
 import suppliersRoutes from './routes/suppliersRoutes.js';
 import customersRoutes from './routes/customersRoutes.js';
+import shopRoutes from './routes/shopRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -24,7 +25,9 @@ app.use(logger);
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: (process.env.FRONTEND_URL || 'http://localhost:5173')
+      .split(',')
+      .map((u) => u.trim()),
     credentials: true,
   }),
 );
@@ -67,6 +70,7 @@ app.use('/api', ordersRoutes);
 app.use('/api', productsRoutes);
 app.use('/api', suppliersRoutes);
 app.use('/api', customersRoutes);
+app.use('/api', shopRoutes);
 
 // Error Handling
 app.use(notFoundHandler);
