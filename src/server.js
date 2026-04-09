@@ -16,6 +16,7 @@ import productsRoutes from './routes/productsRoutes.js';
 import suppliersRoutes from './routes/suppliersRoutes.js';
 import customersRoutes from './routes/customersRoutes.js';
 import shopRoutes from './routes/shopRoutes.js';
+import statisticsRoutes from './routes/statisticsRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3000;
@@ -71,6 +72,7 @@ app.use('/api', productsRoutes);
 app.use('/api', suppliersRoutes);
 app.use('/api', customersRoutes);
 app.use('/api', shopRoutes);
+app.use('/api', statisticsRoutes);
 
 // Error Handling
 app.use(notFoundHandler);
